@@ -115,16 +115,20 @@ public class NewJFrame extends javax.swing.JFrame {
     }
     public int [] getLNCount(String str)
     {
-        int[] res = new int[2];
+        int[] res = new int[3];
         char[] array = str.toCharArray();
         for (int j = 0; j < array.length; j++) {
             if ((array[j] + 'a' - 97 >= 65 && array[j] + 'a' - 97 <= 90)|| (array[j] + 'a' - 97 >= 97 && array[j] + 'a' - 97 <= 122)) {
 
             res[0]++;
             } 
-            else
+            else if(array[j] >=48 || array[j]<=57) //numbers
             {
                 res[1]++;
+            }
+            else //symbols
+            {
+                res[2]++;
             }
         }
         
@@ -138,6 +142,7 @@ public class NewJFrame extends javax.swing.JFrame {
         points += Settings[2]*countCase[0];
         points += countNL[0] + Settings[3];
         points += countNL[1]+ Settings[4];
+        points += countNL[2] * (pass.length() + Settings[5]);
         
         if(countNL[1]==0)
         {
