@@ -1,3 +1,7 @@
+
+import java.awt.Color;
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,7 +18,10 @@ public class NewJFrame extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public NewJFrame() {
-        initComponents();
+        initComponents();      
+            
+        jProgressBar1.setStringPainted(true);
+        jProgressBar1.setForeground(Color.black);
     }
 
     /**
@@ -31,6 +38,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jProgressBar1 = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,12 +62,13 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1)
-                    .addComponent(jPasswordField1))
-                .addContainerGap(93, Short.MAX_VALUE))
+                    .addComponent(jTextField1)
+                    .addComponent(jPasswordField1)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -74,12 +83,14 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    public int pBar=0;
     public int[] Settings = {6,3,2,1,2,4,6,3};
     public void setSettings()
     {
@@ -89,20 +100,25 @@ public class NewJFrame extends javax.swing.JFrame {
     {
         if (points < 26)
         {
+            pBar=25;
             return  "Contraseña insegura.";
         }
         else if(points <36)
         {
+            pBar=35;
             return "Contraseña poco segura." ;
         }
         else if(points < 51)
         {
+            pBar=50;
             return "Contraseña segura.";
         }
         else {
+            pBar=100;
             return "Contraseña muy segura.";
         }
     }
+    
     public int []getUpLowCase(String str)
     {
         int[] res = new int[2];
@@ -122,7 +138,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
             res[0]++;
             } 
-            else if(array[j] >=48 || array[j]<=57) //numbers
+            else if(array[j] >=48 && array[j]<=57) //numbers
             {
                 res[1]++;
             }
@@ -144,11 +160,11 @@ public class NewJFrame extends javax.swing.JFrame {
         points += countNL[1]+ Settings[4];
         points += countNL[2] * (pass.length() + Settings[5]);
         
-        if(countNL[1]==0)
+        if(countNL[1]==0 && countNL[2]==0)
         {
             points-= Settings[6];
         }
-        if(countNL[0]==0)
+        if(countNL[0]==0 && countNL[2]==0)
         {
             points-= Settings[7];
         }
@@ -167,7 +183,8 @@ public class NewJFrame extends javax.swing.JFrame {
         }
         else
         {
-            jTextField1.setText(Result(CheckPass(jPasswordField1.getText())));
+            jTextField1.setText(Result(CheckPass(jPasswordField1.getText())) + "\nPuntuación: " +CheckPass(jPasswordField1.getText()));
+            jProgressBar1.setValue(pBar);
         }
               
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -212,6 +229,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
